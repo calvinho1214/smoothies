@@ -5,15 +5,9 @@ import Search from './Search'
 import '../App.css';
 import { initialState, reducer } from "../store/reducer";
 
-const initialState = {
-  loading: true,
-  movies: [],
-  errorMessage: null
-};
-
 const MOVIE_API_URL = "http://www.omdbapi.com/?i=tt3896198&apikey=be1b26d2";
 
-function App() {
+const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -25,6 +19,10 @@ function App() {
       });
   }, []);
 
+  const search = searchValue => {
+    setLoading(true);
+    setErrorMessage(null);}
+
   fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=be1b26d2`)
       .then(response => response.json())
       .then(jsonResponse => {
@@ -35,12 +33,9 @@ function App() {
           setErrorMessage(jsonResponse.Error);
           setLoading(false);
         }
-      });
-    };
+      })
+}
 
-  const search = searchValue => {
-    setLoading(true);
-    setErrorMessage(null);
   
   const { movies, errorMessage, loading } = state;
   
@@ -62,6 +57,5 @@ function App() {
       </div>
     </div>
   );
-}
 
 export default App;
