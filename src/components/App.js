@@ -3,6 +3,7 @@ import Header from './Header';
 import Movie from './Movie';
 import Search from './Search'
 import '../App.css';
+import { initialState, reducer } from "../store/reducer";
 
 const initialState = {
   loading: true,
@@ -13,9 +14,7 @@ const initialState = {
 const MOVIE_API_URL = "http://www.omdbapi.com/?i=tt3896198&apikey=be1b26d2";
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const [movies, setMovies] = useState([]);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     fetch(MOVIE_API_URL)
@@ -42,6 +41,8 @@ function App() {
   const search = searchValue => {
     setLoading(true);
     setErrorMessage(null);
+  
+  const { movies, errorMessage, loading } = state;
   
   return (
     <div className="App">
