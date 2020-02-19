@@ -1,6 +1,6 @@
 import React from "react";
 
-const DEFAULT_PLACEHOLDER_IMAGE = "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,0,704,1000_AL_.jpg";
+const DEFAULT_PLACEHOLDER_IMAGE = "";
 
 const Movie = ({ movie }) => {
   const poster =
