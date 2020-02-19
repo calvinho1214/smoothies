@@ -4,6 +4,14 @@ import Movie from './Movie';
 import Search from './Search'
 import '../App.css';
 
+const initialState = {
+  loading: true,
+  movies: [],
+  errorMessage: null
+};
+
+const MOVIE_API_URL = "http://www.omdbapi.com/?i=tt3896198&apikey=be1b26d2";
+
 function App() {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
@@ -41,7 +49,15 @@ function App() {
      <Search search={search} />
      <p className="App-intro">Here's our favorites!!!</p>
      <div className="movies">
-            <Movie />
+     {loading && !errorMessage ? (
+         <span>loading...</span>
+         ) : errorMessage ? (
+          <div className="errorMessage">{errorMessage}</div>
+        ) : (
+          movies.map((movie, index) => (
+            <Movie key={`${index}-${movie.Title}`} movie={movie} />
+          ))
+        )}
       </div>
     </div>
   );
