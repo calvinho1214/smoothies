@@ -9,6 +9,19 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  useEffect(() => {
+    fetch(MOVIE_API_URL)
+      .then(response => response.json())
+      .then(jsonResponse => {
+        setMovies(jsonResponse.Search);
+        setLoading(false);
+      });
+  }, []);
+
+  const search = searchValue => {
+    setLoading(true);
+    setErrorMessage(null);
+  
   return (
     <div className="App">
      <Header text="SMOOTHIES" />
