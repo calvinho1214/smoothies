@@ -18,6 +18,19 @@ function App() {
       });
   }, []);
 
+  fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=be1b26d2`)
+      .then(response => response.json())
+      .then(jsonResponse => {
+        if (jsonResponse.Response === "True") {
+          setMovies(jsonResponse.Search);
+          setLoading(false);
+        } else {
+          setErrorMessage(jsonResponse.Error);
+          setLoading(false);
+        }
+      });
+    };
+
   const search = searchValue => {
     setLoading(true);
     setErrorMessage(null);
