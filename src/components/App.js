@@ -1,13 +1,13 @@
-import React, {useReducer, useEffect} from 'react';
-import Header from './Header';
-import Movie from './Movie';
-import Search from './Search'
-import '../App.css';
+import React, { useReducer, useEffect } from "react";
+
+import Header from "./Header";
+import Movie from "./Movie";
+import spinner from "../ajax-loader.gif";
+import Search from "./Search";
 import { initialState, reducer } from "../store/reducer";
 import axios from "axios";
-import spinner from "../assets/ajax-loader.gif";
 
-const MOVIE_API_URL = "http://www.omdbapi.com/?i=tt3896198&apikey=be1b26d2";
+const MOVIE_API_URL = "https://www.omdbapi.com/?s=man&apikey=be1b26d2";
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -26,26 +26,23 @@ const App = () => {
       type: "SEARCH_MOVIES_REQUEST"
     });
 
-  axios(`https://www.omdbapi.com/?s=${searchValue}&apikey=be1b26d2`)
-  .then(
-    jsonResponse => {
-      if (jsonResponse.data.Response === "True") {
-        dispatch({
-          type: "SEARCH_MOVIES_SUCCESS",
-          payload: jsonResponse.data.Search
-        });
-      } else {
-        dispatch({
-          type: "SEARCH_MOVIES_FAILURE",
-          error: jsonResponse.data.Error
-        });
+    axios(`https://www.omdbapi.com/?s=${searchValue}&apikey=be1b26d2`).then(
+      jsonResponse => {
+        if (jsonResponse.data.Response === "True") {
+          dispatch({
+            type: "SEARCH_MOVIES_SUCCESS",
+            payload: jsonResponse.data.Search
+          });
+        } else {
+          dispatch({
+            type: "SEARCH_MOVIES_FAILURE",
+            error: jsonResponse.data.Error
+          });
         }
       }
     );
   };
-}
 
-  
   const { movies, errorMessage, loading } = state;
 
   const retrievedMovies =
@@ -58,16 +55,20 @@ const App = () => {
         <Movie key={`${index}-${movie.Title}`} movie={movie} />
       ))
     );
-  
+
   return (
     <div className="App">
-    <div className="m-container">
-     <Header text="SMOOTHIES" />
-     <Search search={search} />
-     <p className="App-intro">Here's our favorites!!!</p>
-     <div className="movies">{retrievedMovies}</div>
-    </div>
+      <div className="m-container">
+        <Header text="HOOKED" />
+
+        <Search search={search} />
+
+        <p className="App-intro">Sharing a few of our favourite movies</p>
+
+        <div className="movies">{retrievedMovies}</div>
+      </div>
     </div>
   );
+};
 
 export default App;
