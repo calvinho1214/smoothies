@@ -38,23 +38,24 @@ const App = () => {
 
   
   const { movies, errorMessage, loading } = state;
+
+  const retrievedMovies =
+    loading && !errorMessage ? (
+      <img className="spinner" src={spinner} alt="Loading spinner" />
+    ) : errorMessage ? (
+      <div className="errorMessage">{errorMessage}</div>
+    ) : (
+      movies.map((movie, index) => (
+        <Movie key={`${index}-${movie.Title}`} movie={movie} />
+      ))
+    );
   
   return (
     <div className="App">
      <Header text="SMOOTHIES" />
      <Search search={search} />
      <p className="App-intro">Here's our favorites!!!</p>
-     <div className="movies">
-     {loading && !errorMessage ? (
-         <span>loading...</span>
-         ) : errorMessage ? (
-          <div className="errorMessage">{errorMessage}</div>
-        ) : (
-          movies.map((movie, index) => (
-            <Movie key={`${index}-${movie.Title}`} movie={movie} />
-          ))
-        )}
-      </div>
+     <div className="movies">{retrievedMovies}</div>
     </div>
   );
 
