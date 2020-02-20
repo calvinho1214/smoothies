@@ -1,6 +1,6 @@
 import React from "react";
 
-const DEFAULT_PLACEHOLDER_IMAGE = "";
+const DEFAULT_PLACEHOLDER_IMAGE = "https://jberlife.com/wp-content/uploads/2019/07/sorry-image-not-available.jpg";
 
 const Movie = ({ movie }) => {
   const poster =
